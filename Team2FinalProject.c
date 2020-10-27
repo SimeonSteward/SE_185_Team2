@@ -15,8 +15,8 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 
 //////////////////////
 //Struct Definition//
-typedef word {
-	char name[];
+typedef struct word {
+	char name[15];
 	int x;//represents how far right the word is with 0 being the furthest left side of the board
 }word;
 ////////////////////
@@ -41,7 +41,7 @@ int main(){
 	word board[];
 	while(){
 		displayBoard(board);
-		
+
 
 
 	}
