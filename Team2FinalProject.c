@@ -15,19 +15,25 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 
 //////////////////////
 //Struct Definition//
-
+typedef word {
+	int word.x;
+	char name[];
+}word;
 ////////////////////
 
 
 /////////////////////////////////////
 //User Defined Functions Prototype//
-
+ char* fileReader(char file[]);
+ void fileWriter(char file[], char words[][]);
+ void displayBoard(word board[]);
 //List prototypes here and define//
 //tehm below the main function////
 /////////////////////////////////
 
 int main(){
-	
+	char* words = (char*)malloc(sizeof(char)*15*2000);
+	words = fileReader("(File Adress");
 	
 	
 	
