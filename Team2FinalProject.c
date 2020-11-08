@@ -9,33 +9,41 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 Team member 4 "Name" | "Percentage of Contribution to The Project"
 */
 
-////////////////////
-#include<stdio.h>//
-//add more here////
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
 
-//////////////////////
-//Struct Definition//
+#define MAX_NUM_WORDS 1500
+
+
 typedef struct word {
 	char name[15];
 	int x;//represents how far right the word is with 0 being the furthest left side of the board
 }word;
-////////////////////
+
+// the word returned from this function is already randomized
+const char *getWord(char wordArray[][15], int *numWords);
+void addWord(char word[], char wordArray[][15], int *numWords);
+void scanWords(char wordArray[][15], int *numWords);
+void displayBoard(word board[]);
+void removeWord(word board[], char toRemove[15]);
 
 
-/////////////////////////////////////
-//User Defined Functions Prototype//
- char* fileReader(char file[]);
- void fileWriter(char file[], char words[][]);
- void displayBoard(word board[]);
- void removeWord(word board[], char toRemove[15]);
-//List prototypes here and define//
-//tehm below the main function////
-const int MAX_NUM_WORDS = 2000;
-/////////////////////////////////
 
 int main(){
-	char* words = (char*)malloc(sizeof(char)*15*MAX_NUM_WORDS);
-	words = fileReader("(File Adress");
+
+	int *numWords;
+    char wordArray[MAX_NUM_WORDS][15];
+
+    numWords = (int*)malloc(sizeof(int));
+    *numWords = 0;
+
+    srand(time(NULL));
+    scanWords(wordArray, numWords);
+
+
 	//prompt user to see if they want to add words to the file
 	//loop until the user says no
 	word board[];
@@ -53,10 +61,57 @@ int main(){
 	
 	
 	
-	
+	free(numWords);
 	return 0;
 }
 
-///////////////////////////////////////
-//User Defined Functions' Definition//
-/////////////////////////////////////
+
+void scanWords(char wordArray[][15], int *numWords){
+	// this function populates an array with all of the words in the wordList.txt file
+
+    char line[15];
+    int count = 0;
+    FILE *textFile;
+    textFile = fopen("wordList.txt", "r");
+
+    if(textFile == NULL){
+        printf("Error opening file.");
+        exit(1);
+    }
+
+    while(fgets(line, 15, textFile) != NULL){
+            sscanf(line , "%s ", &wordArray[count]);
+            count++;
+        }
+
+    *numWords = count;
+    fclose(textFile);
+}
+
+void addWord(char word[], char wordArray[][15], int *numWords){
+	// adds word to the array
+
+    int tmp = (*numWords)++;
+    FILE *textFile;
+    textFile = fopen("wordList.txt", "a");
+
+    fprintf(textFile, "\n%s", word);
+
+    strcpy(wordArray[tmp], word);
+    *numWords = tmp;
+    fclose(textFile);
+}
+
+
+const char *getWord(char wordArray[][15], int *numWords){
+	// gets a random word from the array
+
+    int rNum;
+    char *randWord;
+    randWord = (char*)malloc(15 * sizeof(char));
+
+    rNum = (rand() % *numWords);
+
+    strcpy(randWord, wordArray[rNum]);
+    return randWord; 
+}
