@@ -14,6 +14,7 @@ Team member 4 "Name" | "Percentage of Contribution to The Project"
 #include <string.h>
 #include <math.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define MAX_NUM_WORDS 1500
 
@@ -46,10 +47,29 @@ int main(){
 
 	//prompt user to see if they want to add words to the file
 	//loop until the user says no
-	word board[];
-	while(){
-		displayBoard(board);
+    
+	word board[16] = {};
+    word empty ={"",0};
+    int i;
+    for(i = 0;i<16;i++);{
+        board[i] = empty;
+    }
 
+	while(strcmp(board[15].name,"")==0){
+        word w = {wordArray[rand()%*numWords],rand()%15};
+        for(i = 15;i>0;){
+            board[i] = board[--i];
+        }
+        board[0] = w;
+        char input[15];
+        scanf("%s",&input);
+        for(i = 0;i<16;i++){
+            if(strcpr(input,board[i].name)==0){
+                board[i] = empty;
+            }
+        }
+
+		displayBoard(board);
 
 
 	}
