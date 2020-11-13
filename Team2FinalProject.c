@@ -43,6 +43,28 @@ int main(){
 
     srand(time(NULL));
     scanWords(wordArray, numWords);
+	
+	char word[50];
+	int check;
+	
+	
+	while(1) {
+		
+	printf("Type the word you would like to print.\n");
+	scanf("%s", word);
+	
+	addWord(word, wordArray, numWords);
+	
+	printf("Would you like to add another word?\n");
+	printf("1. Continue\n");
+	printf("2. Exit\n");
+	
+	scanf("%d", &check);
+	
+	if (check == 2) {
+		break;
+	} 
+	}
 
 
 	//prompt user to see if they want to add words to the file
