@@ -86,8 +86,8 @@ int main(){
         char input[15];
         scanf("%s",&input);
         for(i = 0;i<16;i++){
-            if(strcpr(input,board[i].name)==0){
-                board[i] = empty;
+            if(strcpr(input,list[i].name)==0){
+                blist[i] = empty;
             }
         }
 
