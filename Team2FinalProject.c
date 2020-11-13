@@ -28,8 +28,8 @@ typedef struct word {
 const char *getWord(char wordArray[][15], int *numWords);
 void addWord(char word[], char wordArray[][15], int *numWords);
 void scanWords(char wordArray[][15], int *numWords);
-void displayBoard(word board[]);
-void removeWord(word board[], char toRemove[15]);
+void displayBoard(word list[]);
+void removeWord(word list[], char toRemove[15]);
 
 
 
@@ -70,19 +70,19 @@ int main(){
 	//prompt user to see if they want to add words to the file
 	//loop until the user says no
     
-	word board[16] = {};
+	word list[16] = {};
     word empty ={"",0};
     int i;
     for(i = 0;i<16;i++);{
-        board[i] = empty;
+        list[i] = empty;
     }
 
-	while(strcmp(board[15].name,"")==0){
+	while(strcmp(list[15].name,"")==0){
         word w = {wordArray[rand()%*numWords],rand()%15};
         for(i = 15;i>0;){
-            board[i] = board[--i];
+            list[i] = list[--i];
         }
-        board[0] = w;
+        list[0] = w;
         char input[15];
         scanf("%s",&input);
         for(i = 0;i<16;i++){
@@ -91,7 +91,16 @@ int main(){
             }
         }
 
-		displayBoard(board);
+		char displayWord[17][1];
+		char gotWord;
+		
+		for(int i = 0; i < 18; i++){
+			gotWord = getWord(wordArray[][15], numWords);
+			rand() % (15 - strlen(gotWord));
+			displayWord[i][1] = gotWord;
+			printf("%s", displayWord[i][1]);
+		}
+
 
 
 	}
