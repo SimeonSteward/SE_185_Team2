@@ -81,6 +81,19 @@ int main(){
             // else drop words
             // add word
             // those should be in a for loop based on how many times the time fucntion returns
+			int wordRate = 2000;
+			int difference;
+			int timePrint;
+			gettimeofday(&start, NULL);
+			
+			
+			gettimeofday(&end, NULL);
+			difference = fabs((end.tv_sec - start.tv_sec)) * 1000 + fabs((end.tv_usec - start.tv_usec)) / 1000.0;
+			timePrint = difference / wordRate; 
+			for(int i = 0; i < timePrint; i++){
+				addToBoard(board[17][17], word list[], *currWord, wordToAdd[15]);
+			}
+			wordRate = wordRate - 200;
         }
 
     }
