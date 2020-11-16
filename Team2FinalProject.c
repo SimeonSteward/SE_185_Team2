@@ -3,9 +3,9 @@
 /* 
 Team xx (please insert your team number instead of xx)
 Team member 1 "Simeon Steward" | " 15%"
-Team member 2 "Kim Phu" | "14.5%"
+Team member 2 "Kim Phu" | "15%"
 Team member 3 "Colin Kempf" | "20%"
-Team member 4 "Perry Ports" | "29%"
+Team member 4 "Perry Ports" | "28%"
 Team member 5 "Ethan Baccam" | "22%"
 */
 
