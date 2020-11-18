@@ -3,9 +3,9 @@
 /* 
 Team xx (please insert your team number instead of xx)
 Team member 1 "Simeon Steward" | " 15%"
-Team member 2 "Kim Phu" | "15%"
+Team member 2 "Kim Phu" | "14.5%"
 Team member 3 "Colin Kempf" | "20%"
-Team member 4 "Perry Ports" | "28%"
+Team member 4 "Perry Ports" | "29%"
 Team member 5 "Ethan Baccam" | "22%"
 */
 
@@ -107,9 +107,15 @@ int main(){
             char userInput[20];
             char tmpWord[20];
 
+            int var = 0;
+
+
             if(wordRate == 2000){
                 strcpy(tmpWord, getWord(wordArray, numWords));
 				addToBoard(board, list, currWord, tmpWord);
+            } else if(wordRate == 0){
+                printf("You win");
+                return 0;
             }
 
             // display board
@@ -143,7 +149,7 @@ int main(){
 
             timePrint--;
             }
-			wordRate = wordRate - 200;
+			wordRate = wordRate - 100;
         }
 
     }
@@ -224,10 +230,10 @@ void addToBoard(char board[18][18], word list[], int *currWord, char wordToAdd[1
     // adds word to the board;
     for(int i = 0; i < (len + 1); ++i){
         if(i == len +1){
-            board[i + list[*currWord].x][1] = '\0';
-        } else{
+            //board[i + list[*currWord].x][1] = '\0';
+        } 
         board[i + list[*currWord].x][1] = wordToAdd[i];
-        }
+        
     }
 
 
@@ -244,55 +250,33 @@ void addToBoard(char board[18][18], word list[], int *currWord, char wordToAdd[1
 
 bool dropYaxis(char board[18][18]){
 
-    char tempLine[18];
-    char tempLine2[18];
+    char temp1[18];
+    char temp2[18];
 
-    for(int i = 1; i < 15; i++){
-            if(i == 1){
-                //strcpy(tempLine, board[i]);
-                for(int j = 0; j <= 17; j++){                        
-                    if(j == 17){
-                        tempLine[j] = '\0';
-                    }
-                    if(board[j][i] == '\0'){
-                        board[j][i] = ' ';
-                    }
-                    tempLine[j] = board[j][i];
-                }
+    for(int y = 1; y < 15; y++){
+        if(y == 1){
+            //strcpy(temp1, board[i] );
+            for(int x = 0; x < 18; x++){
+                temp1[x] = board[x][y];
             }
+        }
+        //strcpy(temp2, board[i +1]);
+        for(int x = 0; x < 18; x++){
+            temp2[x] = board[x][y + 1];
+        }
 
-            //strcpy(tempLine2, board[i + 1]);
-            for(int j = 0; j <= 17; j++){
-                if(j == 17){
-                        tempLine2[j] = '\0';
-                    }
-                    if(board[j][i] == '\0'){
-                        board[j][i] = ' ';
-                    }
-                    tempLine2[j] = board[j][i];
-            }
+        //strcpy(board[i +1], temp1);
+        for(int x = 0; x < 18; x++){
+            board[x][y + 1] = temp1[x];
+        }
 
-            //strcpy(board[i + 1], tempLine);
-            for(int j = 0; j <= 17; j++){
-                    if(board[j][i] == '\0'){
-                        board[j][i] = ' ';
-                    }
-                    board[j][i +1] = tempLine[j];
-                    if(j == 17){
-                        board[j][i] = '\0';
-                    }
-            }
-
-            //strcpy(tempLine, tempLine2);
-            for(int j = 0; j < 17; j++){
-                if(j == 17){
-                    tempLine[j] = '\0';
-                } else if(tempLine[j] == '\0'){
-                    tempLine[j] = ' ';
-                }
-                tempLine[j] = tempLine2[j];
-            }
+        //strcpy(temp1, temp2);
+        for(int x = 0; x < 18; x++){
+            temp1[x] = temp2[x];
+        }
     }
+
+
 
     // check for failure
     for(int i = 1; i< 16; i++){
@@ -309,8 +293,8 @@ void removeWord(char board[18][18], char toRemove[15], word list[]){
 
     int len = strlen(toRemove);
     int xAxis = 1;
-    char tempStr[15];
     int listNum = 0;
+    char tempStr[18] = {"-               -"};
 
     // finds if input sring toRemove matches possible word on the baord
     for(int i = 0; i < 15; i++){
@@ -320,24 +304,24 @@ void removeWord(char board[18][18], char toRemove[15], word list[]){
         }
     }
 
-    // finds the string on the board and sets it to spaces
-    for(int y = 1; y < 16; y++){
-        // populates the temp string in each line to compare with the word to remove
-        for(int i = 0; i <= (len +1); i++){
-            if(i = (len +1)){
-                tempStr[i] = '\0';
-           }
-           tempStr[i] = board[xAxis + i][y];
-        }
+    for(int i = 0; i < (len + 1); ++i){
+        
+        tempStr[i + xAxis] = toRemove[i];
+    }
 
-        // if the string is the correct one it removes it
-        if(strcmp(tempStr, toRemove) == 0){
-            for(int i = 0; i < (len + 1); i++){
-                board[i + xAxis][y] = ' ';
-            }
-            // removes word on the list
-            strcpy(list[listNum].name, "  ");
-            return;
+
+    // finds the string on the board and sets it to spaces
+    for(int y = 1; y < 16; y++){            
+
+        // strcmp(board[x][y], tempStr)        
+
+        
+
+
+
+        printf("%s\n", tempStr);
+
+        //strcpy(list[listNum].name, "  ");
+        //return;
         }
     }
-}
