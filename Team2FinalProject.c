@@ -2,11 +2,11 @@
 /////////////////////////
 /* 
 Team xx (please insert your team number instead of xx)
-Team member 1 "Simeon Steward" | " 15%"
-Team member 2 "Kim Phu" | "15%"
-Team member 3 "Colin Kempf" | "20%"
-Team member 4 "Perry Ports" | "28%"
-Team member 5 "Ethan Baccam" | "22%"
+Team member 1 "Simeon Steward" | " 19%"
+Team member 2 "Kim Phu" | "14%"
+Team member 3 "Colin Kempf" | "19%"
+Team member 4 "Perry Ports" | "27%"
+Team member 5 "Ethan Baccam" | "21%"
 */
 
 #include <stdio.h>
@@ -49,6 +49,7 @@ int main(){
     bool gameGoing = true;
     int check;
     int wordRate = 2000;
+    word blank = {"",0};
 
     numWords = (int*)malloc(sizeof(int));
     currWord = (int*)malloc(sizeof(int));
@@ -78,25 +79,25 @@ int main(){
 
 
     if(startGame == 'y' || startGame == 'Y'){
-        // asks user if they would like to add a word
+        // adds words until the user exits
         while(1){
-        char word[15];
+            char word[15];
         
-        printf("Would you like to add word?\n");
-	    printf("1. Continue\n");
-	    printf("2. Exit\n");
+            printf("Would you like to add word?\n");
+	        printf("1. Continue\n");
+	        printf("2. Exit\n");
 
-        scanf("%d", &check);
+            scanf("%d", &check);
 
-        if(check == 1){
-            printf("Enter word: ");
-            scanf("%s", word);
+            if(check == 1){
+                printf("Enter word: ");
+                scanf("%s", word);
 
-	        addWord(word, wordArray, numWords);
+	            addWord(word, wordArray, numWords);
 
-        } else{
-            break;
-        }
+            } else{
+                break;
+            }   
         }
 
 
@@ -107,7 +108,6 @@ int main(){
             char userInput[20];
             char tmpWord[20];
 
-            int var = 0;
 
 
             if(wordRate == 2000){
@@ -119,14 +119,29 @@ int main(){
             }
 
             // display board
-            for(int y = 0; y < 17; y++){
-            for(int x = 0; x <= 17; x++){
-            if(x == 17){
-                printf("%c\n", board[x][y]);
-            }else{
-                printf("%c", board[x][y]);
-            } 
-            }
+            // for(int y = 0; y < 17; y++){
+            //     for(int x = 0; x <= 17; x++){
+            //         if(x == 17){
+            //             printf("%c\n", board[x][y]);
+            //           }else{
+            //              printf("%c", board[x][y]);
+            //           } 
+            //     }
+            // }
+
+            for(int y = 0; y <15; y++){
+                printf("-");
+                int j = 0;
+                for(j = 0;j<list[y].x;j++){
+                    printf(" ");
+                }
+                printf("%s",list[y].name);
+                j+=strlen(list[y].name);
+                for(;j<15;j++){
+                    printf(" ");
+                }
+                printf("-\n");
+
             }
 
 
@@ -142,12 +157,15 @@ int main(){
             removeWord(board, userInput, list);
 
             while(timePrint > 1){
+                if(strcmp(list[14].name,"")!=0){
+                    printf("You lost at gamespeed %d", wordRate);
+                    return 0;
+                }
+                gameGoing = dropYaxis(board);
+                strcpy(tmpWord, getWord(wordArray, numWords));
+	            addToBoard(board, list, currWord, tmpWord);
 
-            gameGoing = dropYaxis(board);
-            strcpy(tmpWord, getWord(wordArray, numWords));
-	        addToBoard(board, list, currWord, tmpWord);
-
-            timePrint--;
+                timePrint--;
             }
 			wordRate = wordRate - 100;
         }
@@ -217,9 +235,13 @@ void addToBoard(char board[18][18], word list[], int *currWord, char wordToAdd[1
     // this function adds a new word to the board 
 
     int len = strlen(wordToAdd);
-
+    //pushes things down in the list
+    
+    for(int i = 14; i>=0;i--){
+        list[i+1]= list[i]; 
+    }
     // determines where on the board the word can legally go
-    list[*currWord].x = rand() % (15 - strlen(wordToAdd)) + 1; 
+    list[0].x = rand() % (15 - strlen(wordToAdd)) + 1; 
 
     // ensures the first line is clear
     for(int x = 1; x < 16; x++){
@@ -295,23 +317,27 @@ void removeWord(char board[18][18], char toRemove[15], word list[]){
     int xAxis = 1;
     int listNum = 0;
     char tempStr[18] = {"-               -"};
+    word blank = {"",0};
 
-    // finds if input sring toRemove matches possible word on the baord
+    // finds if input sring toRemove matches possible word on the board
     for(int i = 0; i < 15; i++){
         if(strcmp(list[i].name, toRemove) == 0){
             xAxis = list[i].x;
             listNum = i;
+            list[i] = blank;
+
         }
     }
 
+    //clears 
     for(int i = 0; i < (len + 1); ++i){
         
-        tempStr[i + xAxis] = toRemove[i];
+         toRemove[i] = tempStr[i + xAxis];
     }
 
 
     // finds the string on the board and sets it to spaces
-    for(int y = 1; y < 16; y++){            
+ //   for(int y = 1; y < 16; y++){            
 
         // strcmp(board[x][y], tempStr)        
 
@@ -319,9 +345,9 @@ void removeWord(char board[18][18], char toRemove[15], word list[]){
 
 
 
-        printf("%s\n", tempStr);
+ //       printf("%s\n", tempStr);
 
         //strcpy(list[listNum].name, "  ");
         //return;
-        }
+       // }
     }
